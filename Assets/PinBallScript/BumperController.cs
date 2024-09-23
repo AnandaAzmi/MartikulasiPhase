@@ -7,6 +7,8 @@ public class BumperController : MonoBehaviour
     public Collider bola;
     public float multiple;
     public Color color;
+    public AudioManager audioManager;
+
 
     private Renderer renderer;
     private Animator animator;
@@ -26,6 +28,7 @@ public class BumperController : MonoBehaviour
             Rigidbody rbBola = bola.GetComponent<Rigidbody>();
             rbBola.velocity *= multiple;
             animator.SetTrigger("hit");
+            audioManager.PlaySFX(collision.transform.position);
         }
     }
 }
