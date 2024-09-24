@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class SwitchController : MonoBehaviour
 {
-    enum SwitchState 
+    public ScoreManager scoreManager;
+    public float score;
+    enum SwitchState
     {
         on, off, blink
     }
@@ -13,7 +15,7 @@ public class SwitchController : MonoBehaviour
     public Material offMaterial;
     public Material onMaterial;
 
-    
+
     private Renderer rend;
     private SwitchState state;
     // Start is called before the first frame update
@@ -27,7 +29,7 @@ public class SwitchController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other == bola)
+        if (other == bola)
         {
             Toggle(); //saat state dalam kondisi apapun (kita ga bisa prediksi) maka jalankan kondisi yang ada pada fungsi toggle()
         }
@@ -35,7 +37,7 @@ public class SwitchController : MonoBehaviour
     public void Set(bool active)
     {
         /*isOn = active;*/
-       // rend.material = isOn ? onMaterial : offMaterial;
+        // rend.material = isOn ? onMaterial : offMaterial;
         if (active == true)
         {
             state = SwitchState.on;
@@ -51,7 +53,7 @@ public class SwitchController : MonoBehaviour
     }
     public void Toggle()
     {
-        
+        scoreManager.AddScore(score);
         if (state == SwitchState.on)
         {
             Set(false);
@@ -61,7 +63,7 @@ public class SwitchController : MonoBehaviour
             Set(true);
         }
     }
-    public IEnumerator Blink (int times)
+    public IEnumerator Blink(int times)
     {
         state = SwitchState.blink;
         for (int i = 0; i < times; i++)

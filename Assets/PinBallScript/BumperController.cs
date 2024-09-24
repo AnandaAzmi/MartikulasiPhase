@@ -6,29 +6,36 @@ public class BumperController : MonoBehaviour
 {
     public Collider bola;
     public float multiple;
+    public float score;
     public Color color;
     public AudioManager audioManager;
-
-
+    public VFXManager vfxManager;
+    public ScoreManager scoreManager;
     private Renderer renderer;
     private Animator animator;
     public void Start()
     {
         renderer = GetComponent<Renderer>();
-        animator = GetComponent<Animator>();    
+        animator = GetComponent<Animator>();
         renderer.material.color = color;
-        
-       
+
+
     }
     private void OnCollisionEnter(Collision collision)
     {
-        
+
         if (collision.collider == bola)
         {
             Rigidbody rbBola = bola.GetComponent<Rigidbody>();
             rbBola.velocity *= multiple;
+            //add animasi
             animator.SetTrigger("hit");
+            //add sfx
             audioManager.PlaySFX(collision.transform.position);
+            //play vfx
+            vfxManager.PlayVFX(collision.transform.position);
+            //add score
+            scoreManager.AddScore(score);
         }
     }
 }
